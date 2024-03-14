@@ -89,8 +89,6 @@
     max-height: 100%;
   }
 
-
-
 /* Restart Button Enhancements */
 #scoreDisplay button {
   font-size: 20px;
@@ -139,8 +137,6 @@ let questionCount = 0;
 const totalQuestions = 5;
 let selectedQuestions = [];
 
-
-
 window.onload = function() {
    scormInit();
    fetchQuestions();
@@ -164,8 +160,6 @@ function fetchQuestions() {
     }
   });
 }
-
-
 
 function shuffleArray(array) {
   for (let i = array.length - 1; i > 0; i--) {
@@ -286,7 +280,6 @@ function restartQuiz() {
   // Now, re-prepare and load the first question
   fetchQuestions(); // This will shuffle and select questions
 }
-
 
 </script>
 </body>
