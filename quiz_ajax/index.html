@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Millionaire Quiz</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f0f0f0; /* Light grey background */
+  }
+
+  #quiz-container {
+    width: 800px;
+    height: 600px;
+    border-radius: 15px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background-color: #fff; /* White background */
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Distribute space */
+  }
+
+  .question {
+    margin-bottom: 20px;
+    font-size: 24px;
+    text-align: center;
+  }
+
+  .answers {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 20px; /* Space between answers */
+    justify-content: center;
+    align-items: center;
+  }
+
+  .answer {
+    padding: 20px;
+    margin: 10px;
+    border: 2px solid #007bff; /* Blue border */
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 18px;
+    transition: background-color 0.5s, transform 0.3s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50px; /* Fixed height for answers */
+  }
+
+  .answer:hover {
+    transform: scale(1.05); /* Slight zoom on hover */
+  }
+
+  .correct {
+    background-color: #28a745; /* Green background */
+  }
+
+  .wrong {
+    background-color: #dc3545; /* Red background */
+  }
+
+  #scoreDisplay {
+    font-size: 24px;
+    margin-top: 20px;
+  }
+
+  .figure {
+    width: 300px;
+    height: 300px; /* Placeholder for figure/animation */
+    margin-bottom: 20px;
+    background-color: #ddd; /* Light grey placeholder */
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .figure img {
+    max-width: 100%;
+    max-height: 100%;
+  }
+
+
+
+/* Restart Button Enhancements */
+#scoreDisplay button {
+  font-size: 20px;
+  color: #fff; /* White text */
+  background-color: #007bff; /* Match the color scheme of the quiz */
+  border: none; /* Remove default border */
+  border-radius: 5px; /* Rounded corners for the button */
+  padding: 10px 20px; /* Padding for a larger, more clickable area */
+  cursor: pointer; /* Cursor change to indicate clickable */
+  transition: background-color 0.3s, transform 0.2s; /* Smooth transitions for color and transform */
+  margin-top: 15px; /* Space from the score text */
+}
+
+#scoreDisplay button:hover {
+  background-color: #0056b3; /* Darker shade on hover for button feedback */
+  transform: scale(1.05); /* Slight scale-up on hover */
+}
+
+/* Adding a general container shadow and padding adjustment */
+#quiz-container {
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* More pronounced shadow for the container */
+  padding: 20px; /* Adjust padding if necessary */
+  transition: transform 0.2s; /* Smooth transform transition for the whole container */
+}
+
+#quiz-container:hover {
+  transform: scale(1.01); /* Slight scale-up of the container on hover */
+}
+</style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+
+<body>
+
+<div id="quiz-container">
+  <div class="figure" id="figure"></div>
+  <div class="question" id="question"></div>
+  <div class="answers" id="answers"></div>
+  <div id="scoreDisplay"></div>
+</div>
+
+<script>
+window.onload = function() {
+   fetchQuestions();
+};
+
+function fetchQuestions() {
+  $.ajax({
+    url: 'questions.json', // Adjust the path as necessary
+    type: 'GET',
+    dataType: 'json',
+    success: function(data) {
+      questions = data;
+      prepareQuestions();
+    },
+    error: function(error) {
+      console.error('Error fetching questions:', error);
+    }
+  });
+}
+
+
+let score = 0;
+let questionCount = 0;
+const totalQuestions = 5;
+let selectedQuestions = [];
+
+function shuffleArray(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+}
+
+function prepareQuestions() {
+  shuffleArray(questions);
+  selectedQuestions = questions.slice(0, totalQuestions);
+  loadQuestion();
+}
+
+function loadQuestion() {
+  if (questionCount === totalQuestions) {
+    displayScore();
+    return;
+  }
+
+  const currentQuestion = selectedQuestions[questionCount];
+  document.getElementById('question').textContent = currentQuestion.question;
+  document.getElementById('figure').style.backgroundImage = `url(${currentQuestion.figure})`; // Set the image
+
+  const answers = [...currentQuestion.answers];
+  shuffleArray(answers);
+
+  const answersContainer = document.getElementById('answers');
+  answersContainer.innerHTML = '';
+  answers.forEach(answer => {
+    const button = document.createElement('button');
+    button.textContent = answer;
+    button.classList.add('answer');
+    button.onclick = () => checkAnswer(answer, currentQuestion.correct);
+    answersContainer.appendChild(button);
+  });
+}
+
+function checkAnswer(selected, correct) {
+  const answerButtons = document.querySelectorAll('.answer');
+  answerButtons.forEach(button => {
+    button.disabled = true;
+    if (button.textContent === correct) {
+      button.classList.add('correct');
+    } else {
+      button.classList.add('wrong');
+    }
+  });
+
+  setTimeout(() => {
+    if (selected === correct) {
+      score++;
+    }
+    questionCount++;
+    loadQuestion();
+  }, 1000);
+}
+
+function displayScore() {
+    // Clear existing content
+    document.getElementById('quiz-container').innerHTML = '';
+
+    // Create a new div for displaying the score
+    const scoreDiv = document.createElement('div');
+    scoreDiv.setAttribute('id', 'scoreDisplay');
+    scoreDiv.innerHTML = `Quiz Complete! You scored ${score} out of ${totalQuestions}.<br><button onclick="restartQuiz()">Restart Quiz</button>`;
+
+    // Append the score div to the quiz-container
+    document.getElementById('quiz-container').appendChild(scoreDiv);
+}
+
+function restartQuiz() {
+  score = 0; // Reset score
+  questionCount = 0; // Reset question count
+  
+  // Clear quiz container and rebuild the necessary HTML structure
+  const quizContainer = document.getElementById('quiz-container');
+  quizContainer.innerHTML = ''; // Clear existing content
+  
+  // Recreate the figure div
+  const figureDiv = document.createElement('div');
+  figureDiv.className = 'figure';
+  figureDiv.id = 'figure';
+  quizContainer.appendChild(figureDiv);
+  
+  // Recreate the question div
+  const questionDiv = document.createElement('div');
+  questionDiv.className = 'question';
+  questionDiv.id = 'question';
+  quizContainer.appendChild(questionDiv);
+  
+  // Recreate the answers div
+  const answersDiv = document.createElement('div');
+  answersDiv.className = 'answers';
+  answersDiv.id = 'answers';
+  quizContainer.appendChild(answersDiv);
+  
+  // Recreate the score display div (initially empty)
+  const scoreDisplayDiv = document.createElement('div');
+  scoreDisplayDiv.id = 'scoreDisplay';
+  quizContainer.appendChild(scoreDisplayDiv);
+  
+  // Now, re-prepare and load the first question
+  fetchQuestions(); // This will shuffle and select questions
+}
+
+
+</script>
+</body>
+</html>
