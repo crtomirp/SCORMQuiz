@@ -1,0 +1,62 @@
+[
+  {
+    "question": "What is the capital of France?",
+    "figure": "img/paris.png", 
+    "answers": ["Paris", "London", "Berlin", "Madrid"],
+    "correct": "Paris"
+  },
+  {
+    "question": "Who painted the Mona Lisa?",
+    "figure": "img/monalisa.png",
+    "answers": ["Leonardo da Vinci", "Michelangelo", "Raphael", "Donatello"],
+    "correct": "Leonardo da Vinci"
+  },
+   {
+    "question": "Which planet is known as the Red Planet?",
+    "figure": "img/mars.png",
+    "answers": ["Mars", "Jupiter", "Saturn", "Mercury"],
+    "correct": "Mars"
+  },
+  {
+    "question": "In which city would you find the Colosseum?",
+    "figure": "img/colosseum.png",
+    "answers": ["Rome", "Athens", "Cairo", "London"],
+    "correct": "Rome"
+  },
+  {
+    "question": "What is the largest mammal in the world?",
+    "figure": "img/bluewhale.png",
+    "answers": ["Elephant", "Blue Whale", "Giraffe", "Hippopotamus"],
+    "correct": "Blue Whale"
+  },
+  {
+    "question": "Who wrote 'Hamlet'?",
+    "figure": "img/hamlet.png",
+    "answers": ["William Shakespeare", "Charles Dickens", "Leo Tolstoy", "Mark Twain"],
+    "correct": "William Shakespeare"
+  },
+  {
+    "question": "What is the chemical symbol for gold?",
+    "figure": "img/gold.png",
+    "answers": ["Au", "Ag", "Fe", "Cu"],
+    "correct": "Au"
+  },
+  {
+    "question": "Which country is the largest by land area?",
+    "figure": "img/worldmap.png",
+    "answers": ["Russia", "Canada", "China", "United States"],
+    "correct": "Russia"
+  },
+  {
+    "question": "Who invented the telephone?",
+    "figure": "img/telephone.png",
+    "answers": ["Alexander Graham Bell", "Thomas Edison", "Nikola Tesla", "Guglielmo Marconi"],
+    "correct": "Alexander Graham Bell"
+  },
+  {
+    "question": "What is the hardest natural substance on Earth?",
+    "figure": "img/diamond.png",
+    "answers": ["Diamond", "Gold", "Iron", "Quartz"],
+    "correct": "Diamond"
+  }
+]

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<manifest identifier="com.example.quiz" version="1.2" xmlns="http://www.imsproject.org/xsd/imscp_rootv1p1p2" xmlns:adlcp="http://www.adlnet.org/xsd/adlcp_rootv1p2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsproject.org/xsd/imscp_rootv1p1p2 imscp_rootv1p1p2.xsd http://www.adlnet.org/xsd/adlcp_rootv1p2 adlcp_rootv1p2.xsd">
+  <metadata>
+    <schema>ADL SCORM</schema>
+    <schemaversion>1.2</schemaversion>
+  </metadata>
+  <organizations default="quizOrg">
+    <organization identifier="quizOrg" structure="hierarchical">
+      <title>Millionaire Quiz</title>
+      <item identifier="quizItem" identifierref="quizResource" isvisible="true">
+        <title>Quiz</title>
+      </item>
+    </organization>
+  </organizations>
+  <resources>
+    <resource identifier="quizResource" type="webcontent" adlcp:scormType="sco" href="index.html">
+      <metadata>
+        <adlcp:location>meta-data/quizMetadata.xml</adlcp:location>
+      </metadata>
+      <file href="index.html"/>
+      <file href="scorm.js"/>
+      <file href="questions.json"/>
+      <file href="img/paris.png"/>
+      <file href="img/monalisa.png"/>
+      <file href="img/mars.png"/>
+      <file href="img/colosseum.png"/>
+      <file href="img/bluewhale.png"/>
+      <file href="img/hamlet.png"/>
+      <file href="img/gold.png"/>
+      <file href="img/worldmap.png"/>
+      <file href="img/telephone.png"/>
+      <file href="img/diamond.png"/>
+      <dependency identifierref="sharedLibrary"/>
+    </resource>
+    <resource identifier="sharedLibrary" type="webcontent" adlcp:scormType="asset">
+      <file href="style.css"/>
+      <!-- Include any other shared libraries or CSS files here -->
+    </resource>
+  </resources>
+</manifest>
+
+
